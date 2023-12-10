@@ -28,7 +28,11 @@ export async function getBannerAPI() {
 
 export async function getMoviesAPI() {
   try {
-    const resp = await baseAPI.get("/quanlyphim/laydanhsachphim");
+    const resp = await baseAPI.get("/quanlyphim/laydanhsachphim", {
+      params: {
+        maNhom: "GP03",
+      },
+    });
     return resp.data.content;
   } catch (error) {
     throw error.response?.data?.content;
