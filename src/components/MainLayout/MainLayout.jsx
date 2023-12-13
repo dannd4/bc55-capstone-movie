@@ -7,7 +7,6 @@ export default function MainLayout() {
     <div
       style={{
         minHeight: "100vh",
-        backgroundColor: "aqua",
       }}
     >
       <Header />
