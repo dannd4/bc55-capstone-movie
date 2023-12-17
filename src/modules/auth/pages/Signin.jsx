@@ -1,5 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useSelector, useDispatch } from "react-redux";
+import { Navigate, useSearchParams } from "react-router-dom";
+import { signin } from "../slices/authSlice";
 
 export default function Signin() {
   const {
@@ -14,13 +17,30 @@ export default function Signin() {
     mode: "onSubmit",
   });
 
-  const handleSignin = (values) => {
-    console.log(values);
+  const [searchParams] = useSearchParams();
+
+  const { currentUser, isLoading, error } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+
+  const handleSignin = async (values) => {
+    try {
+      await dispatch(signin(values)).unwrap();
+      alert("Đăng nhập thành công");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleError = (errors) => {
     console.log(errors);
   };
+
+  if (currentUser) {
+    // Nếu có thông tin đăng nhập của user => điều hướng về trang home
+    const url = searchParams.get("from") || "/";
+    return <Navigate to={url} replace />;
+  }
 
   return (
     <div>
@@ -58,7 +78,9 @@ export default function Signin() {
           {errors.matKhau && <span>{errors.matKhau.message}</span>}
         </div>
 
-        <button>Đăng Nhập</button>
+        {error && <p>{error}</p>}
+
+        <button disabled={isLoading}>Đăng Nhập</button>
       </form>
     </div>
   );

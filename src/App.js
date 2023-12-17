@@ -6,6 +6,7 @@ import Signup from "./modules/auth/pages/Signup";
 
 import NotFound from "./components/NotFound";
 import MainLayout from "./components/MainLayout";
+import PrivateRoute from "./routers/PrivateRoute";
 
 function App() {
   return (
@@ -15,6 +16,15 @@ function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="/details/:movieId" element={<Details />} />
+            <Route
+              path="/tickets/:ticketId"
+              element={
+                <PrivateRoute>
+                  <h1>Tickets</h1>
+                </PrivateRoute>
+              }
+            />
+
             <Route path="/sign-in" element={<Signin />} />
             <Route path="/sign-up" element={<Signup />} />
           </Route>

@@ -30,7 +30,7 @@ export async function getMoviesAPI() {
   try {
     const resp = await baseAPI.get("/quanlyphim/laydanhsachphim", {
       params: {
-        maNhom: "GP03",
+        maNhom: "GP07",
       },
     });
     return resp.data.content;
